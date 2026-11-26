@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cross-Stream Playlist</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Cross-Stream Playlist</h1>
+    <p class="sub">One autoplay queue across Paramount+, Disney+, HBO Max and Peacock.</p>
+  </header>
+
+  <main class="layout">
+    <!-- Now playing / controls -->
+    <section class="card player" aria-labelledby="np-h">
+      <h2 id="np-h">Now playing</h2>
+      <div id="nowPlaying" class="now-playing empty">Nothing playing yet. Add videos, then press Play.</div>
+      <div class="progress" aria-hidden="true"><div id="progressBar" class="bar"></div></div>
+      <div id="timeLabel" class="time">--:-- / --:--</div>
+      <div class="controls">
+        <button id="prevBtn" title="Previous">⏮ Prev</button>
+        <button id="playBtn" class="primary" title="Play / Pause">▶ Play</button>
+        <button id="nextBtn" title="Next">Next ⏭</button>
+        <button id="stopBtn" title="Stop">⏹ Stop</button>
+      </div>
+      <div class="options">
+        <label><input type="checkbox" id="loopChk" /> Loop playlist</label>
+        <label><input type="checkbox" id="shuffleChk" /> Shuffle</label>
+        <label>Credits buffer
+          <input type="number" id="bufferInput" min="-30" max="30" step="1" value="0" /> min
+        </label>
+        <label>Up-next warning
+          <input type="number" id="warnInput" min="0" max="120" step="5" value="15" /> sec
+        </label>
+      </div>
+      <p class="hint">Videos open in a separate <strong>player window</strong> (keep it open — drag it to your TV/second screen and go full screen).
+        Streaming sites can't report when a video ends, so each item advances after its runtime.</p>
+    </section>
+
+    <!-- Add form -->
+    <section class="card" aria-labelledby="add-h">
+      <h2 id="add-h">Add a video</h2>
+      <form id="addForm" autocomplete="off">
+        <label>Video link
+          <input type="url" id="urlInput" required placeholder="Paste the episode/movie URL from the service" />
+        </label>
+        <div class="row">
+          <label>Title
+            <input type="text" id="titleInput" placeholder="e.g. The Office S2E1" />
+          </label>
+          <label>Service
+            <select id="serviceInput"></select>
+          </label>
+        </div>
+        <div class="row">
+          <label>Runtime
+            <input type="text" id="durationInput" required placeholder="e.g. 42, 1:58:00, 1h 58m" />
+          </label>
+          <label>Skip first
+            <input type="text" id="skipInput" placeholder="optional, e.g. 1:30" />
+          </label>
+        </div>
+        <button type="submit" class="primary">+ Add to playlist</button>
+      </form>
+      <p class="hint">Tip: open the title on the service, start it, then copy the address bar URL — that link autoplays when you're signed in.</p>
+    </section>
+
+    <!-- Playlist -->
+    <section class="card list" aria-labelledby="pl-h">
+      <div class="list-head">
+        <h2 id="pl-h">Playlist <span id="totalLabel" class="muted"></span></h2>
+        <div class="list-actions">
+          <button id="exportBtn" title="Download playlist as JSON">Export</button>
+          <label class="file-btn" title="Load a playlist JSON file">Import<input type="file" id="importInput" accept="application/json,.json" hidden /></label>
+          <button id="clearBtn" class="danger">Clear</button>
+        </div>
+      </div>
+      <ol id="playlist" class="playlist"></ol>
+      <p id="emptyList" class="muted">Your playlist is empty.</p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <template id="itemTpl">
+    <li class="item" draggable="true">
+      <span class="grip" aria-hidden="true">⋮⋮</span>
+      <span class="badge"></span>
+      <div class="meta">
+        <div class="title"></div>
+        <div class="sub muted"></div>
+      </div>
+      <div class="item-actions">
+        <button class="play-one" title="Play from here">▶</button>
+        <button class="up" title="Move up">↑</button>
+        <button class="down" title="Move down">↓</button>
+        <button class="remove danger" title="Remove">✕</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="playlist-core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

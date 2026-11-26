@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "items": [
+    { "title": "Replace me – Paramount+ episode", "url": "https://www.paramountplus.com/shows/video/REPLACE_WITH_VIDEO_ID/", "duration": "45m" },
+    { "title": "Replace me – Disney+ movie", "url": "https://www.disneyplus.com/play/REPLACE_WITH_VIDEO_ID", "duration": "1h 52m", "skip": "0:30" },
+    { "title": "Replace me – HBO Max episode", "url": "https://play.hbomax.com/video/watch/REPLACE_WITH_VIDEO_ID", "duration": "58m" },
+    { "title": "Replace me – Peacock episode", "url": "https://www.peacocktv.com/watch/playback/vod/REPLACE_WITH_VIDEO_ID", "duration": "22m" }
+  ],
+  "settings": { "loop": false, "shuffle": false, "buffer": 0, "warn": 15 }
+}
